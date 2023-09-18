@@ -13,7 +13,7 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        if (!turnManager.IsPlayerTurn) return; // Block input if it's not the player's turn
+        if (!turnManager.IsPlayerTurn) return;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -30,10 +30,8 @@ public class InputManager : MonoBehaviour
         }
     }
 
-
     public BodyPart DetermineBodyPart(Collider collider)
     {
-        // Assuming each body part's visual representation has the BodyPart script attached
         return collider.GetComponent<BodyPart>();
     }
 }

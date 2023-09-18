@@ -8,22 +8,54 @@ public class Character : MonoBehaviour
     public float Health = 100f;
     public float AttackPower = 10f;
 
-    public void ReceiveDamage(BodyPart targetPart, float damage)
+    private Dictionary<BodyPart, float> bodyPartsHealth = new Dictionary<BodyPart, float>();
+
+    private void Start()
     {
-        Health -= damage * targetPart.DamageMultiplier;
-        if (Health <= 0 && targetPart.IsVital)
+        // Initialize the health of each body part
+        foreach (BodyPart part in BodyParts)
         {
-            Die();
-            return;
+            bodyPartsHealth[part] = part.InitialHealth;
         }
-        foreach (var effect in targetPart.EffectsOnLoss)
+    }
+    
+    public void ReceiveDamage(BodyPart targetPart, float damageAmount)
+    {
+        // Calculate the actual damage based on the target body part's damage multiplier
+        float actualDamage = damageAmount * targetPart.DamageMultiplier;
+    
+        // Apply the damage to the targeted body part
+        if (bodyPartsHealth.ContainsKey(targetPart))
         {
-            ApplyStatusEffect(effect);
+            bodyPartsHealth[targetPart] -= actualDamage;
         }
-        if (Health <= 0)
+        else
         {
-            // Disable the visual representation of the body part
-            targetPart.visualRepresentation.SetActive(false);
+            bodyPartsHealth[targetPart] = targetPart.InitialHealth - actualDamage;
+        }
+
+        // Check if the body part's health is depleted
+        if (bodyPartsHealth[targetPart] <= 0)
+        {
+            // Disable the visual representation of the lost body part
+            GameObject lostPartVisual = GameObject.FindWithTag(targetPart.Name); // or GameObject.Find(targetPart.Name) if using names
+            if (lostPartVisual != null)
+            {
+                lostPartVisual.SetActive(false);
+            }
+
+            // Apply status effects associated with losing that body part
+            foreach (StatusEffect effect in targetPart.EffectsOnLoss)
+            {
+                ApplyStatusEffect(effect);
+            }
+
+            // If the body part is vital (e.g., head or torso), handle character death
+            if (targetPart.IsVital)
+            {
+                // Handle character death logic here
+                // For example, play a death animation, update the game state, etc.
+            }
         }
     }
 

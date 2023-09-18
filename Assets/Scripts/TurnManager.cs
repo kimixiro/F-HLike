@@ -9,7 +9,6 @@ namespace DefaultNamespace
         public Turn currentTurn { get; private set; } = Turn.Player;
         public TurnPhase currentPhase = TurnPhase.PeriodicDamage;
         public CombatSystem combatSystem;
-        
 
         public void StartTurn(Turn turn)
         {
@@ -17,20 +16,17 @@ namespace DefaultNamespace
             IsPlayerTurn = (currentTurn == Turn.Player);
             StartCoroutine(TurnRoutine());
         }
-        
+
         private IEnumerator TurnRoutine()
         {
-            // Start with the PeriodicDamage phase
             currentPhase = TurnPhase.PeriodicDamage;
             combatSystem.ApplyPeriodicDamage();
-            yield return new WaitForSeconds(1f); // Wait for a second (or any desired duration)
-
-            // Move to the Action phase
+            yield return new WaitForSeconds(1f);
             currentPhase = TurnPhase.Action;
+
             if (currentTurn == Turn.Player)
             {
-                // Wait for the player to take an action
-                // This will be handled by the InputManager
+                // Player's turn logic here
             }
             else
             {
@@ -38,10 +34,9 @@ namespace DefaultNamespace
                 EndTurn();
             }
         }
-        
+
         public void EndTurn()
         {
-            // Switch to the other character's turn
             if (currentTurn == Turn.Player)
             {
                 StartTurn(Turn.Enemy);
@@ -51,6 +46,5 @@ namespace DefaultNamespace
                 StartTurn(Turn.Player);
             }
         }
-
     }
 }

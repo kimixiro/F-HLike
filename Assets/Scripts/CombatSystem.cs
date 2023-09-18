@@ -1,7 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 using UnityEngine;
 
 public class CombatSystem : MonoBehaviour
@@ -15,29 +12,27 @@ public class CombatSystem : MonoBehaviour
         Enemy.ReceiveDamage(targetPart, damage);
     }
 
+    public IEnumerator EnemyAction()
+    {
+        // Wait for a short delay to simulate the enemy thinking
+        yield return new WaitForSeconds(1f);
+
+        // Randomly select a body part to attack
+        BodyPart[] bodyParts = (BodyPart[])System.Enum.GetValues(typeof(BodyPart));
+        BodyPart randomTarget = bodyParts[Random.Range(0, bodyParts.Length)];
+
+        EnemyAttack(randomTarget);
+    }
+
     public void EnemyAttack(BodyPart targetPart)
     {
         float damage = Enemy.AttackPower;
         Player.ReceiveDamage(targetPart, damage);
     }
-    
+
     public void ApplyPeriodicDamage()
     {
-        // Apply damage from status effects like bleeding or poison
-        // This can be expanded based on the status effects you have
-        // For now, as an example, we'll reduce health directly
-        Player.Health -= 5; // Example damage to player
-        Enemy.Health -= 5; // Example damage to enemy
+        Player.Health -= 5;  // This can be modified based on status effects in the future
+        Enemy.Health -= 5;  // This can be modified based on status effects in the future
     }
-    
-    public IEnumerator EnemyAction()
-    {
-        yield return new WaitForSeconds(2f); // Wait for 2 seconds before the enemy takes an action
-
-        // For simplicity, the enemy will target a random body part of the player
-        BodyPart randomPart = Player.BodyParts[Random.Range(0, Player.BodyParts.Count)];
-        EnemyAttack(randomPart);
-    }
-
 }
-
