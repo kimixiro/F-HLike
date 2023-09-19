@@ -10,6 +10,7 @@ public class CombatSystem : MonoBehaviour
     {
         float damage = Player.AttackPower;
         Enemy.ReceiveDamage(targetPart, damage);
+        Debug.Log($"Player attacked {Enemy.name}'s {targetPart.Name}. Enemy's health is now: {Enemy.Health}.");
     }
 
     public IEnumerator EnemyAction()
@@ -28,8 +29,8 @@ public class CombatSystem : MonoBehaviour
     {
         float damage = Enemy.AttackPower;
         Player.ReceiveDamage(targetPart, damage);
+        Debug.Log($"Enemy attacked Player's {targetPart.Name}. Player's health is now: {Player.Health}.");
     }
-
     public void ApplyPeriodicDamage()
     {
         Player.Health -= 5;  // This can be modified based on status effects in the future

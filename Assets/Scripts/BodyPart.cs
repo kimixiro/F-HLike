@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class BodyPart
 {
-    public string Name { get; private set; } // Name or tag of the visual representation
-    public float DamageMultiplier { get; private set; }
-    public float InitialHealth { get; private set; } // Added this property
-    public bool IsVital { get; private set; }
-    public List<StatusEffect> EffectsOnLoss { get; private set; }
-    public bool CanBeReplaced { get; private set; }
+    public string Name;
+    public float DamageMultiplier = 1.0f;
+    public bool IsVital = false;
+    public List<StatusEffect> EffectsOnLoss = new List<StatusEffect>();
+    public bool CanBeReplaced = false;
+    public float InitialHealth = 100f;
 
     public BodyPart(string name, float damageMultiplier, float initialHealth, bool isVital, List<StatusEffect> effectsOnLoss, bool canBeReplaced)
     {

@@ -14,6 +14,7 @@ namespace DefaultNamespace
         {
             currentTurn = turn;
             IsPlayerTurn = (currentTurn == Turn.Player);
+            Debug.Log($"It's now {currentTurn}'s turn.");
             StartCoroutine(TurnRoutine());
         }
 

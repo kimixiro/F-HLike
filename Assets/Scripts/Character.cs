@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    public List<BodyPart> BodyParts = new List<BodyPart>();
+    [SerializeField]
+    private List<BodyPart> bodyParts = new List<BodyPart>();
+
+    public List<BodyPart> BodyParts => bodyParts;
     public float Health = 100f;
     public float AttackPower = 10f;
 
@@ -37,6 +40,7 @@ public class Character : MonoBehaviour
         // Check if the body part's health is depleted
         if (bodyPartsHealth[targetPart] <= 0)
         {
+            Debug.Log($"{gameObject.name}'s {targetPart.Name} has been destroyed.");
             // Disable the visual representation of the lost body part
             GameObject lostPartVisual = GameObject.FindWithTag(targetPart.Name); // or GameObject.Find(targetPart.Name) if using names
             if (lostPartVisual != null)
@@ -56,6 +60,10 @@ public class Character : MonoBehaviour
                 // Handle character death logic here
                 // For example, play a death animation, update the game state, etc.
             }
+        }
+        else
+        {
+            Debug.Log($"{gameObject.name}'s {targetPart.Name} received {actualDamage} damage. Remaining health: {bodyPartsHealth[targetPart]}.");
         }
     }
 
