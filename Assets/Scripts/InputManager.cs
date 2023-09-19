@@ -3,35 +3,55 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public CombatSystem combatSystem;
-    private TurnManager turnManager;
-
-    private void Start()
-    {
-        turnManager = FindObjectOfType<TurnManager>();
-    }
+    public CombatSystem combatSystem; // Reference to the CombatSystem
+    public TurnManager turnManager;   // Reference to the TurnManager
 
     private void Update()
     {
-        if (!turnManager.IsPlayerTurn) return;
-
-        if (Input.GetMouseButtonDown(0))
+        // Check if it's the player's turn
+        if (turnManager.currentTurn == Turn.Player)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            // Check for a mouse click
+            if (Input.GetMouseButtonDown(0))
             {
-                BodyPart targetedPart = DetermineBodyPart(hit.collider);
-                if (targetedPart != null)
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
                 {
-                    combatSystem.PlayerAttack(targetedPart);
+                    BodyPart targetedBodyPart = DetermineBodyPart(hit.collider);
+
+                    if (targetedBodyPart != null)
+                    {
+                        // Handle the attack logic here
+                        combatSystem.PlayerAttack(targetedBodyPart);
+                    }
                 }
             }
         }
     }
 
-    public BodyPart DetermineBodyPart(Collider collider)
+    private BodyPart DetermineBodyPart(Collider collider)
     {
-        return collider.GetComponent<BodyPart>();
+        // Get the Character component from the clicked GameObject's parent or itself
+        Character targetCharacter = collider.transform.GetComponentInParent<Character>();
+
+        // If the clicked GameObject is the player or doesn't have a Character component, return null
+        if (targetCharacter == null || targetCharacter == combatSystem.Player)
+        {
+            return null;
+        }
+
+        string tag = collider.gameObject.tag;
+
+        foreach (BodyPart part in targetCharacter.BodyParts)
+        {
+            if (part.Name == tag)
+            {
+                return part;
+            }
+        }
+
+        return null; // Return null if no matching body part is found
     }
 }
