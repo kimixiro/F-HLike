@@ -1,10 +1,6 @@
-public enum StatusEffect
+﻿using UnityEngine;
+
+public class StatusEffect : MonoBehaviour
 {
-    Poisoned,
-    Bleeding,
-    Infected,
-    BrokenLimbs,
-    Paralyzed,
-    Weakened
-    // ... (add other effects as needed)
+        
 }
