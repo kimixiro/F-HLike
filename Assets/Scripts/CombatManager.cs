@@ -21,14 +21,14 @@ public class CombatManager : MonoBehaviour
 
     public void ExecuteTurn(Entity entity)
     {
-        int remainingActionPoints = entity.actionPoints; // New variable for action points
+        int remainingActionPoints = entity.actionPoints;
 
         while (remainingActionPoints > 0)
         {
             Action selectedAction = entity.ChooseAction();
-            Entity targetEntity = ChooseTarget(); // Choose the target entity
-            BodyPart targetBodyPart = ChooseTargetBodyPart(targetEntity); // New method to choose target body part
-            selectedAction.Execute(entity, targetEntity, targetBodyPart); // Modified to pass BodyPart and Entity
+            Entity targetEntity = ChooseTarget();
+            BodyPart targetBodyPart = ChooseTargetBodyPart(targetEntity);
+            selectedAction.Execute(entity, targetEntity, targetBodyPart);
 
             remainingActionPoints--;
         }
@@ -36,13 +36,11 @@ public class CombatManager : MonoBehaviour
 
     public Entity ChooseTarget()
     {
-        // Implement target entity selection logic here
-        return turnOrder[0]; // Placeholder
+        return turnOrder[0];
     }
 
     public BodyPart ChooseTargetBodyPart(Entity targetEntity)
     {
-        // Implement target body part selection logic here based on the target entity's body parts
-        return targetEntity.bodyParts[0]; // Placeholder
+        return targetEntity.bodyParts[0];
     }
 }
