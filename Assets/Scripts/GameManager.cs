@@ -13,7 +13,12 @@ public class GameManager : MonoBehaviour
             case GameState.Combat:
                 combatManager.HandleCombat();
                 break;
-            // Add other game states here
+            case GameState.Exploration:
+                // Implement exploration logic here
+                break;
+            case GameState.Dialogue:
+                // Implement dialogue logic here
+                break;
         }
     }
 }

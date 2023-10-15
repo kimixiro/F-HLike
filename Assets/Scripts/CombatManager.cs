@@ -5,6 +5,7 @@ public class CombatManager : MonoBehaviour
 {
     public List<Entity> turnOrder;
     public UIManager uiManager;
+    public AnimationAndSoundManager animationAndSoundManager;
 
     public void StartCombat(List<Entity> entities)
     {
@@ -30,17 +31,23 @@ public class CombatManager : MonoBehaviour
             BodyPart targetBodyPart = ChooseTargetBodyPart(targetEntity);
             selectedAction.Execute(entity, targetEntity, targetBodyPart);
 
+            // Play animation and sound based on the action
+            animationAndSoundManager.PlayAnimation(selectedAction.actionName);
+            animationAndSoundManager.PlaySound(selectedAction.actionName);
+
             remainingActionPoints--;
         }
     }
 
     public Entity ChooseTarget()
     {
+        // Implement logic for choosing target
         return turnOrder[0];
     }
 
     public BodyPart ChooseTargetBodyPart(Entity targetEntity)
     {
+        // Implement logic for choosing target body part
         return targetEntity.bodyParts[0];
     }
 }

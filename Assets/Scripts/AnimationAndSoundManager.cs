@@ -2,13 +2,18 @@ using UnityEngine;
 
 public class AnimationAndSoundManager : MonoBehaviour
 {
+    public Animator animator;
+    public AudioSource audioSource;
+
     public void PlayAnimation(string animationName)
     {
-        // Implement animation logic here
+        animator.Play(animationName);
     }
 
     public void PlaySound(string soundName)
     {
-        // Implement sound logic here
+        AudioClip clip = Resources.Load<AudioClip>("Sounds/" + soundName);
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 }

@@ -10,6 +10,26 @@ public class Entity : MonoBehaviour
 
     public Action ChooseAction()
     {
+        // Implement logic for choosing an action
+        // For now, return the first available action as a placeholder
         return availableActions[0];
+    }
+
+    public void ApplyStatusEffect(StatusEffect effect)
+    {
+        statusEffects.Add(effect);
+    }
+
+    public void RemoveStatusEffect(StatusEffect effect)
+    {
+        statusEffects.Remove(effect);
+    }
+
+    public void UpdateStatusEffects()
+    {
+        foreach (StatusEffect effect in statusEffects)
+        {
+            effect.ApplyEffect(this);
+        }
     }
 }
