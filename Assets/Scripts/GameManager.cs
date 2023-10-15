@@ -4,7 +4,6 @@ public class GameManager : MonoBehaviour
 {
     public enum GameState { Exploration, Combat, Dialogue }
     public GameState currentState;
-
     public CombatManager combatManager;
 
     void Update()
@@ -14,7 +13,7 @@ public class GameManager : MonoBehaviour
             case GameState.Combat:
                 combatManager.HandleCombat();
                 break;
-            // Handle other states...
+            // Add other game states here
         }
     }
 }

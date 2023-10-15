@@ -5,11 +5,11 @@ public class UIManager : MonoBehaviour
 {
     public void UpdateEntityUI(Entity entity)
     {
-        // Update health, stamina, etc. on the UI
+        // Implement UI update logic here
     }
 
     public void ShowActionMenu(List<Action> actions)
     {
-        // Show available actions for the player to choose from
+        // Implement action menu logic here
     }
 }

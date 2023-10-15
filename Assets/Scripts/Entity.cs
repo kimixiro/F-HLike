@@ -3,15 +3,14 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public int health;
-    public int stamina;
+    public List<BodyPart> bodyParts; // New field to hold body parts
     public List<Action> availableActions;
     public List<StatusEffect> statusEffects;
+    public int actionPoints; // New field for action points
 
     public Action ChooseAction()
     {
-        // Implement logic to choose an action
-        // For now, just return the first available action
+        // Implement action selection logic here
         return availableActions[0];
     }
 }
